@@ -1,4 +1,8 @@
-/* import the normalize stylesheet to eliminate differences between browser defaults */
+/* import the normalize stylesheet to eliminate differences between browser defaults 
+makes the defaults across all browsers the same
+    -takes off the body margin
+    -include at top so things can get rewritten if needed
+*/
 @import url(../lib/normalize.css);
 
 /* import the Google font 'Lato' */
@@ -14,3 +18,64 @@
     - margins and padding
     - borders
 */
+
+body {
+    font-family: Lato, Helvetica, sans-serif;
+    /*px is 1/96 in*/
+    font-size: 18px;
+}
+
+header {
+    background-color: #CCC;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+a {
+    text-decoration: none;
+}
+
+footer {
+    background-color: #333;
+    color: #FFF;
+
+    padding: 3em;
+    border-top: 5px solid #F00;
+}
+
+header h1 {
+    margin-top: 0;
+}
+
+
+/*group selector*/
+h1, h2 {
+    font-weight: 300;
+}
+
+footer a {
+    color: #DDF;
+}
+
+footer a:hover {
+    color: #AAB;
+}
+
+/*psuedo-selector, focus is a tab*/
+a:hover, a:focus {
+    text-decoration: underline;
+}
+
+
+/*class selector*/
+.subtitle {
+    font-size: 200%;
+    font-weight: 300;
+}
+
+.term {
+    font-style: italic;
+}
+
+
+

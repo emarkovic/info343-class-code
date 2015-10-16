@@ -1,3 +1,4 @@
+/*map is now the full screen because the page doesnt have whitespace at the borders*/
 body, html {
     height: 100%;
     margin: 0;

@@ -1,7 +1,7 @@
 /*
     script for the index.html file
 */
-Parse.initialize("izmfRQS3ily2xTB6aGH2syFfJlqM4AsDmW6jnUDU", "GJEmoWjIPu1tM4lNbSzMGuwMswPd9DM3tF43M4cb");
+Parse.initialize("cKWO0k4diyiFfz4Y2dXLzrYwj71RXTjMdfG4xkKX", "m1d1fK0LPw8I3zP1WBoeUVWY61i6U0AEoKk2emd0");
 $(function () {
     'use strict';
     

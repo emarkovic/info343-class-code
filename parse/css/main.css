@@ -11,3 +11,12 @@ body {
     display: none;
 }
 
+#tasks-list li {
+    cursor: pointer;
+}
+
+.completed-class {
+    color: #AAA;
+    text-decoration: line-through;;
+}
+

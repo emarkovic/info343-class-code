@@ -1,7 +1,7 @@
 /*
     script for the index.html file
 */
-Parse.initialize("cKWO0k4diyiFfz4Y2dXLzrYwj71RXTjMdfG4xkKX", "m1d1fK0LPw8I3zP1WBoeUVWY61i6U0AEoKk2emd0");
+Parse.initialize("izmfRQS3ily2xTB6aGH2syFfJlqM4AsDmW6jnUDU", "GJEmoWjIPu1tM4lNbSzMGuwMswPd9DM3tF43M4cb");
 $(function () {
     'use strict';
     
@@ -12,6 +12,7 @@ $(function () {
     //new query that will return all tasks ordered by createdAt
     var taskQuery = new Parse.Query(Task);
     taskQuery.ascending('createdAt');
+    taskQuery.notEqualTo('done', true);
 
     //reference to the task list element
     var tasksList = $('#tasks-list');
@@ -21,6 +22,8 @@ $(function () {
 
     //current set of tasks
     var tasks = [];
+
+    var ratingElem = $('#rating');
 
     function displayError(err) {
         errorMessage.text(err.message);
@@ -32,10 +35,10 @@ $(function () {
     }
 
     function showSpinner() {
-        $('.fa').show();
+        $('.fa-spinner').show();
     }
     function hideSpinner() {
-        $('.fa').hide();
+        $('.fa-spinner').hide();
     }
 
     function fetchTasks() {
@@ -54,11 +57,29 @@ $(function () {
     function renderTasks() {
         tasksList.empty();  
         tasks.forEach(function (task) {
-            $(document.createElement('li'))
+            var li = $(document.createElement('li'))
                 .text(task.get('title'))
-                .appendTo(tasksList);
+                .addClass(task.get('done') ? 'completed-class' : '')
+                .appendTo(tasksList)
+                .click(function () {
+                    console.log("clicked");
+                    task.set('done', !task.get('done'));
+                    task.save()
+                        .then(renderTasks);
+                })
+            $(document.createElement('span'))
+                .raty({
+                    readOnly : true,
+                    score: (task.get('rating') || 0),
+                    hints : ['crap', 'bad', 'okay', 'nice', 'awesome']})
+                .appendTo(li);
         });
     }
+
+    // function showMessage(message) {
+    //     message = message || 'hello';
+    //     alert(message)
+    // }
 
     //when the user submits the new task form
     $('#new-task-form').submit(function (evt) {
@@ -67,16 +88,20 @@ $(function () {
         var titleInput = $(this).find('[name="title"]');
         var title = titleInput.val();
         var task = new Task();
+        task.set('rating', ratingElem.raty('score'))
         task.set('title', title);
         task.save()
             .then(fetchTasks, displayError)
             .then(function () {
                 titleInput.val(' ');
+                ratingElem.raty('set', {});
             });
 
         //same as prevent default
         return false;
     });
+
+    ratingElem.raty();
 
     //get tasks from the server
     fetchTasks();

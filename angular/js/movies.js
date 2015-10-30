@@ -1,7 +1,32 @@
-angular.module('Movies', [])                    //need http for ajax requests in angular
-    .controller('MoviesController', function ($scope, $http) {
+angular.module('Movies', ['ui.router'])
+    .factory('moviesJson', function ($http) {
+        return $http.get('data/movies-2014.min.json');
+    })
+    //for entire modile
+    .config(function ($stateProvider, $urlRouterProvider) {
+        $stateProvider
+            .state('list', {
+                url : '/movies',
+                templateURL : 'views/movies-list.html',
+                controller : 'MoviesController'
+            })
+            .state('detail', {
+                url : '/movies/:index',
+                templateURL : 'views/movies-detail.html',
+                controller : 'MoviesDetailController'
+            });
+            $urlRouterProvider.otherwise('/movies');
+    })
+    .controller('MoviesDetailController', function ($scope, $stateParams, moviesJson) {
+        moviesJson
+            .then(function (results) {
+                $scope.movie = results.data[$stateParams.index];
+            })
+    })
+                    //need http for ajax requests in angular
+    .controller('MoviesController', function ($scope, moviesJson) {
         
-        $http.get('/data/movies-2014.min.json')
+        moviesJson
             .then(function (results) {
                 var ratingsMap = {
                     "Not Rated" : 0,

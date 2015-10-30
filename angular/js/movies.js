@@ -7,12 +7,12 @@ angular.module('Movies', ['ui.router'])
         $stateProvider
             .state('list', {
                 url : '/movies',
-                templateURL : 'views/movies-list.html',
+                templateUrl : 'views/movies-list.html',
                 controller : 'MoviesController'
             })
             .state('detail', {
                 url : '/movies/:index',
-                templateURL : 'views/movies-detail.html',
+                templateUrl : 'views/movies-detail.html',
                 controller : 'MoviesDetailController'
             });
             $urlRouterProvider.otherwise('/movies');
